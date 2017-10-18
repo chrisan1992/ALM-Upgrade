@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace NOC_Macro.Models
+namespace ALM_Upgrade.Models
 {
 
     [MetadataType(typeof(Customer_ProjectMetaData))]
