@@ -1,0 +1,512 @@
+﻿@model NOC_Macro.Models.Customer_Project
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>New Customer Project</h2>
+
+
+                <ul class="nav navbar-right panel_toolbox">
+                    <input type="submit" value="Add Emails" class="btn btn-success" onclick="AddEmails();" />
+                    <input type="submit" value="Send Notification" class="btn btn-warning" onclick="OpenSendEmails();" />
+                </ul>
+
+
+
+                <div class="clearfix"></div>
+            </div>
+
+
+            @using (Html.BeginForm())
+            {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.customer_name, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        @Html.EditorFor(model => model.customer_name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.customer_name, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.customerId)
+                        @Html.HiddenFor(model => model.initialNotification)
+                        @Html.HiddenFor(model => model.finalNotification)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.customer_url, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        @Html.EditorFor(model => model.customer_url, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.customer_url, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.service_id, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        @Html.EditorFor(model => model.service_id, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.service_id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.deactivation, new { @class = "flat" }) Deactivate all projects
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.undo_checkouts, new { @class = "flat" }) Undo checkouts if the project has the feature of version control enabled
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.copy_file, new { @class = "flat" }) Copy the files of each project into the new filer
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.copy_db, new { @class = "flat" }) Copy the schemas of each project using the pretty tool
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.change_file, new { @class = "flat" }) Make the necessary corrections on the dbid.xml file
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.restore_project, new { @class = "flat" }) Restore the projects from Site Admin
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.verify_project, new { @class = "flat" }) Run a verify/repair on each restored project
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.upgrade_project, new { @class = "flat" }) Upgrade each project to the latest version
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.verification, new { @class = "flat" }) Complete the verification process from the Kiosk (<a class="" href="https://pfast01psp.saas.hpe.com/rest/alm/verificationCheckList" target="_blank">https://pfast01psp.saas.hpe.com/rest/alm/verificationCheckList</a>)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.release,new { @class="flat" }) Release the projects to the customer
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+            }
+
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Project List</h2>
+
+
+                <ul class="nav navbar-right panel_toolbox">
+                    <input type="submit" value="Upload Projects" class="btn btn-success" onclick="openUploadProjects();" />
+                </ul>
+
+                <div class="clearfix"></div>
+            </div>
+
+            @{
+            Html.RenderAction("ProjectList", new { id = @Model.id });
+            }
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal-upload-projects">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Add Emails</h4>
+            </div>
+            <div class="modal-body" id="modal-emails-body">
+                <h4>Select the file containing the projects to upload, only .csv files are allowed. Make sure the file is in the correct format:</h4> 
+                <ul>
+                    <li>
+                        Only 2 columns
+                    </li>
+                    <li>
+                        First column for Domain Name and second column for Project Name
+                    </li>
+                    <li>
+                        No empty rows
+                    </li>
+                    <li>
+                        No row titles
+                    </li>
+                </ul>
+
+                <input type="file" name="File" style="" id="upload-projects">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="uploadProjects(@Model.id);">Upload</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal-emails">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Add Emails</h4>
+            </div>
+            <div class="modal-body" id="modal-emails-body">
+                Enter the emails in the next textbox to be added, please make sure to follow these guidelines:<br />
+                <ol>
+                    <li>Each email must be in one line</li>
+                    <li>No comas or special characters to divide the emails</li>
+                    <li>If there are blank lines they are not going to be added</li>
+                    <li>If one or more emails don't have the correct format, they will be ignored</li>
+                </ol>
+                <textarea rows="5" class="form-control" id="emails-text"></textarea>
+                <div class="ln_solid"></div>
+                <div id="partial-render">
+                    @{
+                    Html.RenderAction("Emails", new { id = @Model.id });
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="SaveEmails(@Model.id);">Save emails</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal-send-email">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Notify Customer</h4>
+            </div>
+            <div class="modal-body" id="modal-emails-body">
+                <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4" style="font-size:15px;">
+                        Select which notification you want to send to the customer:
+                    </div>
+                    <div class="col-sm-8 col-md-8 col-lg-8">
+                        <select id="notification-type" class="form-control" onchange="displayField(this);">
+                            <option value="1">Initial Notification</option>
+                            <option value="2">Intermediate Notification</option>
+                            <option value="3" disabled="disabled">Final Notificacion</option>
+                        </select>
+                        <div class="ln_solid"></div>
+                        <textarea rows="5" class="form-control" id="comments-text" style="display:none;" placeholder="Comments..."></textarea>
+                        <input type="file" name="File" style="display:none;" id="upload-input">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="NotifyCustomer(@Model.id);" id="btn-notify">Notify Customer</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script type="text/javascript">
+    function AddEmails()
+    {
+        $("#modal-emails").modal();
+    }
+
+    function OpenSendEmails() {
+        $("#modal-send-email").modal();
+    }
+
+    //saves the emails to the database
+    function SaveEmails(projectId)
+    {
+        OpenModal();
+        var emails = $("#emails-text").val();
+        $.ajax({
+            url: "/Customer_Project/AddEmails",
+            type: "GET",
+            data: { emailList: emails, id: projectId},
+            success: function (data) {
+                $("#partial-render").load('/Customer_Project/Emails/' +@Model.id);
+                $("#emails-text").val("");
+                CloseModal();
+            }
+        });
+        
+    }
+
+    //sends the request to notify the customer
+    function NotifyCustomer(projectId)
+    {
+        OpenModal();
+        $("#modal-send-email").modal('hide');
+
+        var comm = $("#comments-text").val();
+        var type = $("#notification-type").val();
+
+
+        var fileUpload = $("#upload-input").get(0);
+        var files = fileUpload.files;
+
+        // Create FormData object
+        var fileData = new FormData();
+
+        // Looping over all files and add it to FormData object
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+        //add other data
+        fileData.append('id', projectId);
+        fileData.append('customerId', customerId);
+        fileData.append('notificationType', type);
+        fileData.append('comments', comm);
+
+
+        $.ajax({
+            url: "/Customer_Project/NotifyCustomer",
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: fileData,
+            success: function (data) {
+                CloseModal();
+            },
+            error: function (err) {
+                alert("An error ocurred");
+            }
+        });
+    }
+
+    //sends the request to delete an email
+    function DeleteEmail(EmailID)
+    {
+        OpenModal();
+        $.ajax({
+            url: "/Customer_Project/DeleteEmail",
+            type: "POST",
+            data: { id: EmailID },
+            success: function (data) {
+                $("#partial-render").load('/Customer_Project/Emails/' +@Model.id);
+                CloseModal();
+            }
+        });
+        
+    }
+
+    function openUploadProjects(id)
+    {
+        $("#modal-upload-projects").modal();
+    }
+
+    function uploadProjects(id)
+    {
+        OpenModal();
+        var fileUpload = $("#upload-projects").get(0);
+        var files = fileUpload.files;
+
+        // Create FormData object
+        var fileData = new FormData();
+
+        // Looping over all files and add it to FormData object
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+        //add other data
+        fileData.append('id', id);
+
+
+        $.ajax({
+            url: "/Customer_Project/AddProjectList",
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: fileData,
+            success: function (data) {
+                CloseModal();
+                //reads the result string sent from the controller
+                //alert(data);
+                location.reload();
+            },
+            error: function (err) {
+                alert("An error ocurred");
+            }
+        });
+    }
+
+    //changes the inputs according to the select option
+    function displayField(sel) {
+        if (sel.value == 1) {
+            $("#comments-text").hide();
+            $("#upload-input").hide();
+        } else if (sel.value == 2) {
+            $("#comments-text").show();
+            $("#upload-input").hide();
+
+        } else if (sel.value == 3) {
+            $("#comments-text").hide();
+            $("#upload-input").show();
+        }
+    }
+
+    //initialize components
+    $(document).ready(function () {
+        $('#emails_table').DataTable();
+        $("[type=search]").addClass("form-control");//add the class to the field
+
+        //disable the already sent notifications
+        if ('@Model.initialNotification' == 'True')
+        {
+            $('select').children('option[value="1"]').attr('disabled', true);
+            $('select').children('option[value="2"]').attr('selected', true);
+            $("#comments-text").show();
+        }
+
+        if ('@Model.finalNotification' == 'True')
+        {//si se envio la final, no se pueden enviar mas
+            $('select').children('option[value="3"]').attr('disabled', true);
+            $('select').children('option[value="2"]').attr('disabled', true);
+            $('select').children('option[value="1"]').attr('disabled', true);
+            $("#btn-notify").hide();
+            $("#comments-text").hide();
+        }
+        if ('@ViewBag.allchecks' == 'True')
+        {
+            $('select').children('option[value="3"]').attr('disabled', false);
+        }
+    });
+</script>
+
+<link href="~/Content/green.css" rel="stylesheet" />
+<script src="~/Scripts/icheck.js"></script>

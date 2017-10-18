@@ -1,0 +1,16 @@
+Dear @CUSTOMER
+
+This notification is to remind you that we will be upgrading your ALM instance.
+
+During the implementation of the upgrade maintenance, all your projects will be unavailable.
+
+Please note any checked-out entities belonging to projects such as Tests, Resources or Requirements will be omitted and any data that was changed will be ignored.
+
+At the end of the change the aforementioned projects will be available under the following URL: <a href='@URL' target='_blank'>@URL</a>
+
+Please remember that the download of the new client components may be required
+
+You can check the progress of this migration on the next link <a href='@LINK' target='_blank'>@LINK</a>
+
+Best Regards.
+SaaS Team

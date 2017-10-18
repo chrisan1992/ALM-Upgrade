@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='shortcut icon' type='image/x-icon' href='/Content/favicon.png' />
+    <title>ALM Customer Upgrade</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    @Styles.Render("~/Content/bootstrap.css")
+    <!-- Font Awesome -->
+    @Styles.Render("~/Content/font-awesome.css")
+    <!-- jQuery custom content scroller -->
+    @Styles.Render("~/Content/jquery.mCustomScrollbar.css")
+    <!-- Custom Theme Style -->
+    @Styles.Render("~/Content/custom.css")
+
+
+    <!-- jQuery -->
+    @Scripts.Render("~/Scripts/jquery.js")
+
+
+
+</head>
+<body class="nav-md footer_fixed">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col menu_fixed">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a class="site_title"><i class="fa fa-dashboard"></i> <span>ALM Upgrade</span></a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="/Content/userimg.jpg" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>@Session["username"]</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+                    <br />
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a href="/"><i class="fa fa-home"></i> Home</a>
+
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-bookmark"></i> ALM Upgrade <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="~/Customer_Project/">Index</a></li>
+                                        <li><a href="~/Customer_Project/Create">Create</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-user"></i> User Management <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="~/Users/">Index</a></li>
+                                        <li><a href="~/Users/Create">Create</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <img src="~/Content/logo_mf_blue.png" style="padding-bottom: 10px;margin-left: 50px;width: 120px;" />
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars" style="color: #2CC5C4;"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <img id="top-logo" src="~/Content/logo_mf.png" class="pull-right" style="width: 110px;margin-right: 10px;margin-top: 10px;display:none;" />
+                            <li class="menu-right">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="/Content/userimg.jpg" alt="">@Session["username"]
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li>@Html.ActionLink("Change Password", "ChangePassword", "Users", new { id = Session["user_id"] }, new { })</li>
+                                    <li>@Html.ActionLink("Log Out", "LogOut", "Home")</li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main" style="height:100%;padding-bottom:100px;">
+                <div class="">
+
+                    <div class="alert alert-warning alert-dismissible fade in" role="alert" id="view-message-div" hidden>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                        <span id="view-message"></span>
+                    </div>
+
+                    @RenderBody()
+                </div>
+            </div>
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Micro Focus Software
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+
+
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="loadingModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <div class="modal-body" id="modal-emails-body">
+                    <img src="~/Content/loading.gif" style="width:100%;" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap -->
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    <!-- jQuery custom content scroller -->
+    @Scripts.Render("~/Scripts/jquery.mCustomScrollbar.concat.min.js")
+    <!-- Custom Theme Scripts -->
+    @Scripts.Render("~/Scripts/custom.min.js")
+
+    @{
+        if (Session["message"] != null && Session["message"].ToString() != "null")
+        {//show message to view
+            <script type="text/javascript">
+                $("#view-message").html('@Session["message"]');
+                $("#view-message-div").show();
+            </script>
+            Session["message"] = "null";
+        }
+    }
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".dataTables_filter").css("margin-right",10);
+                });
+
+        function OpenModal() {
+            $("#loadingModal").modal('show');
+        }
+
+        function CloseModal() {
+            $("#loadingModal").modal('hide');
+        }
+    </script>
+
+</body>
+</html>

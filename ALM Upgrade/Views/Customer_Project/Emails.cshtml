@@ -1,0 +1,45 @@
+﻿@model IEnumerable<NOC_Macro.Models.Project_Email>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped" id="emails_table">
+        <thead>
+            <tr>
+                <th>
+                    Emails already added
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.email)
+                    </td>
+                    <td>
+                        <input type="submit" value="Delete" class="btn btn-danger" onclick="DeleteEmail(@Html.DisplayFor(modelItem => item.id));" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#emails_table').DataTable();
+        $("[type=search]").addClass("form-control");//add the class to the field
+    });
+</script>
+
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.dataTables.js"></script>
+
+
+
+
+

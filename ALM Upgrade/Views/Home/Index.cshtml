@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="tile-stats">
+            <div class="icon"><i class="fa fa-bookmark"></i></div>
+            <div class="count">ALM Upgrade</div>
+            <h3>@Html.ActionLink("List", "Index", "Customer_Project", null, new { })  | @Html.ActionLink("Create", "Create", "Customer_Project", null, new { }) </h3>
+        </div>
+    </div>
+
+    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="tile-stats">
+            <div class="icon"><i class="fa fa-user"></i></div>
+            <div class="count">User Management</div>
+            <h3>@Html.ActionLink("List", "Index", "Users", null, new { })  | @Html.ActionLink("Create", "Create", "Users", null, new { }) </h3>
+        </div>
+    </div>
+</div>

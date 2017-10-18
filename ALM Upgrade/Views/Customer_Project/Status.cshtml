@@ -1,0 +1,167 @@
+﻿@model NOC_Macro.Models.Customer_Project
+
+@{
+    ViewBag.Title = "Upgrade Status";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Upgrade Status</h2>
+                <div class="clearfix"></div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <h5 class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12">Customer Name</h5>
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                            @Html.EditorFor(model => model.customer_name, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h5 class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12">Target URL</h5>
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                            @Html.EditorFor(model => model.customer_url, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h5 class="control-label col-lg-2 col-md-2 col-sm-2 col-xs-12">SD Number</h5>
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                            @Html.EditorFor(model => model.service_id, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ln_solid"></div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    
+                </div>
+                <div class="col-sm-8">
+                    <h2>Upgrade Tasks</h2>
+                </div>
+                <div class="col-sm-2 hidden-xs">
+                    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align:right;">
+                    <h5 data-toggle="tooltip" data-placement="top" title="" data-original-title="Deactivate all the projects">Deactivated</h5>
+                    
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" style="height: 50px;">
+                    <div class="progress" style="height: 28px;">
+                        <div class="progress-bar progress-bar-primary" data-transitiongoal="@ViewBag.Deactivation"></div>
+                    </div>
+                </div>
+                <div class="col-sm-2 hidden-xs">
+                    @ViewBag.Deactivation %
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align:right;">
+                    <h5 data-toggle="tooltip" data-placement="top" title="" data-original-title="Copy of the databases and repository files">Data Copy</h5>
+                    
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" style="height: 50px;">
+                    <div class="progress" style="height: 28px;">
+                        <div class="progress-bar progress-bar-primary" data-transitiongoal="@ViewBag.DataCopy"></div>
+                    </div>
+                </div>
+                <div class="col-sm-2 hidden-xs">
+                    @ViewBag.DataCopy %
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align:right;">
+                    <h5 data-toggle="tooltip" data-placement="top" title="" data-original-title="Upgrade all the projects to the latest version">Upgrade</h5>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" style="height: 50px;">
+                    <div class="progress" style="height: 28px;">
+                        <div class="progress-bar progress-bar-primary" data-transitiongoal="@ViewBag.Upgrade"></div>
+                    </div>
+                </div>
+                <div class="col-sm-2 hidden-xs">
+                    @ViewBag.Upgrade %
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align:right;">
+                    <h5 data-toggle="tooltip" data-placement="top" title="" data-original-title="Complete internal validation process">Validation</h5>
+                    
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" style="height: 50px;">
+                    <div class="progress" style="height: 28px;">
+                        <div class="progress-bar progress-bar-primary" data-transitiongoal="@ViewBag.Validation"></div>
+                    </div>
+                </div>
+                <div class="col-sm-2 hidden-xs">
+                    @ViewBag.Validation %
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align:right;">
+                    <h5 data-toggle="tooltip" data-placement="top" title="" data-original-title="Completion of the upgrade, projects are enabled to the customer for the final validation">Release</h5>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" style="height: 50px;">
+                    <div class="progress" style="height: 28px;">
+                        <div class="progress-bar progress-bar-success" data-transitiongoal="@ViewBag.Release"></div>
+                    </div>
+                </div>
+                <div class="col-sm-2 hidden-xs">
+                    @ViewBag.Release %
+                </div>
+            </div>
+
+
+            <div class="ln_solid"></div>
+
+
+
+
+
+
+            <div class="accordion" id="accordion1" role="tablist" aria-multiselectable="true">
+                <div class="panel">
+                    <a class="panel-heading" role="tab" id="headingOne1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne1" aria-expanded="true" aria-controls="collapseOne">
+                        <h4 class="panel-title">Completed Project List</h4>
+                    </a>
+                    <div id="collapseOne1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" style="">
+                        <div class="panel-body">
+                            @{
+                                Html.RenderAction("FinishedProjectList", new { id = @Model.id });
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".left_col").hide();
+        $(".menu-right").hide();
+        $("#top-logo").show();
+        $(".right_col").css("margin-left", "0px");
+        $(".top_nav").css("margin-left", "0px");
+    });
+</script>
+
+
+<link href="~/Content/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-progressbar.js"></script>

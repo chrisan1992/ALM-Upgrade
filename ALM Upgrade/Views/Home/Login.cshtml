@@ -1,0 +1,31 @@
+﻿
+@{
+    Layout = "~/Views/Shared/Login.cshtml";
+}
+
+<section class="login_content">
+
+    @using (Html.BeginForm())
+    {
+        <h1>ALM Login</h1>
+        <div>
+            <input type="email" class="form-control" name="UserName" placeholder="Email..." required="" />
+        </div>
+        <div>
+            <input type="password" class="form-control" name="Password" placeholder="Password..." required="" />
+        </div>
+        <div class="row text-center">
+            <input type="submit" value="Login" class="btn btn-success" style="float:none;margin-left:0;" />
+            @Html.ActionLink("Forgot your password?", "ForgotPassword")
+        </div>
+        <div class="clearfix"></div>
+        <div class="separator">
+            <div class="clearfix"></div>
+            <br />
+            <div>
+                <h1><i class="fa fa-tasks"></i> ALM Upgrade</h1>
+            </div>
+        </div>
+    }
+
+</section>

@@ -1,0 +1,16 @@
+Dear @CUSTOMER
+
+This is the progress status on this migration
+
+Tasks completed: 
+
+    @CHECKBOXES
+
+Additional comments: 
+
+   @COMMENTS
+
+You can check the progress of this migration on the next link <a href='@LINK' target='_blank'>@LINK</a>
+
+Best Regards.
+SaaS Team

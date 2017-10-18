@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='shortcut icon' type='image/x-icon' href='/Content/favicon.png' />
+    <title>ALM Upgrade</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    @Styles.Render("~/Content/bootstrap.css")
+    <!-- Font Awesome -->
+    @Styles.Render("~/Content/font-awesome.css")
+    <!-- jQuery custom content scroller -->
+    @Styles.Render("~/Content/jquery.mCustomScrollbar.css")
+    <!-- Custom Theme Style -->
+    @Styles.Render("~/Content/custom.css")
+
+</head>
+<body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
+        <div class="login_wrapper">
+
+            <div class="animate form login_form">
+
+                <div class="alert alert-warning alert-dismissible fade in" role="alert" id="view-message-div" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <span id="view-message"></span>
+                </div>
+
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    @Scripts.Render("~/Scripts/jquery.js")
+
+
+    @{
+        if (Session["message"] != null && Session["message"].ToString() != "null")
+        {//show message to view
+            <script type="text/javascript">
+                $("#view-message").html('@Session["message"]');
+                $("#view-message-div").show();
+            </script>
+            Session["message"] = "null";
+        }
+    }
+
+
+</body>
+</html>

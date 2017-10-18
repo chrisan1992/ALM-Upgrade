@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="092bff6e9a694cfd8c3bd79e86210659" Name="Diagram1">
+        <EntityTypeShape EntityType="upgradeModel.Customer_Project" Width="1.5" PointX="2.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="upgradeModel.Permission" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="upgradeModel.Project_Email" Width="1.5" PointX="5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="upgradeModel.ProjectList" Width="1.5" PointX="5" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="upgradeModel.Users" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="upgradeModel.UsersPermissions" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="upgradeModel.database_firewall_rules" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="upgradeModel.FK__Project_E__proje__22AA2996" ManuallyRouted="false" />
+        <AssociationConnector Association="upgradeModel.FK__ProjectLi__custo__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="upgradeModel.FK__UsersPerm__Permi__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="upgradeModel.FK__UsersPerm__UserI__4E88ABD4" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<NOC_Macro.Models.Customer_Project>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Customer Project</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
+                </ul>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped" id="projects_table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.customer_name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.customer_url)
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.customer_name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.customer_url)
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.customer_name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.customer_url)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-warning" })
+                                        @Html.ActionLink("Status", "Status", new { id = item.customerId }, new { @class = "btn btn-default" })
+                                        <input type="submit" value="Delete" class="btn btn-danger" onclick="DeleteProject(@item.id);" />
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#projects_table').DataTable();
+        $("[type=search]").addClass("form-control");//add the class to the field
+    });
+
+    function DeleteProject(projectid)
+    {
+        window.location.href = "/Customer_Project/Delete/" + projectid;
+    }
+</script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.0/css/responsive.bootstrap.min.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+
+

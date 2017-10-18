@@ -1,0 +1,38 @@
+﻿@model IEnumerable<NOC_Macro.Models.ProjectList>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped" id="projects_table">
+        <thead>
+            <tr>
+                <th>
+                    Domain Name
+                </th>
+                <th>
+                    Project Name
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.domain_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.project_name)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+

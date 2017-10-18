@@ -1,0 +1,10 @@
+Dear @CUSTOMER
+
+Your planned maintenance has been completed successfully
+
+The projects are now available on <a href='@URL' target='_blank'>@URL</a>
+
+Please open a new ticket under My Account portal in case of any questions or issues after the upgrade.
+
+Best Regards
+SaaS Team

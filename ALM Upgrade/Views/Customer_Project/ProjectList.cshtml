@@ -1,0 +1,78 @@
+﻿@model IEnumerable<NOC_Macro.Models.ProjectList>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped" id="projects_table">
+        <thead>
+            <tr>
+                <th>
+                    Finished
+                </th>
+                <th>
+                    Domain Name
+                </th>
+                <th>
+                    Project Name
+                </th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>    
+                        @Html.CheckBoxFor(modelItem => item.finished, new { @class = "flat ccheck", cid=item.id })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.domain_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.project_name)
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#projects_table').DataTable();
+        $("[type=search]").addClass("form-control");//add the class to the field
+
+        $(".ccheck").on("ifChecked", function () {
+            finished($(this).attr('cid'),1);
+        });
+
+        $(".ccheck").on("ifUnchecked", function () {
+            finished($(this).attr('cid'),0);
+        });
+
+    });
+
+    //updates in the db the status of the specific project
+    function finished(id,state) {
+        OpenModal();
+        $.ajax({
+            url: "/Customer_Project/ProjectFinished",
+            type: "GET",
+            data: { id: id,state:state },
+            success: function (data) {
+                CloseModal();
+            }
+        });
+        
+    }
+
+</script>
+
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.dataTables.js"></script>
+
+
+
+
+
+
