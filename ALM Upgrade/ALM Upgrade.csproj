@@ -217,6 +217,7 @@
     <Content Include="Content\image.png" />
     <Content Include="Content\img.jpg" />
     <Content Include="Content\initial.txt" />
+    <Content Include="Content\initial_inhouse.txt" />
     <Content Include="Content\intermediate.txt" />
     <Content Include="Content\jquery.dataTables.css" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
