@@ -392,8 +392,16 @@ namespace ALM_Upgrade.Controllers
 
 
         [HttpPost]
-        public ActionResult NotifyCustomer(int id, int notificationType, string comments)
+        public ActionResult NotifyCustomer(int id, int notificationType, string comments, string inhouse)
         {
+            if (inhouse.Equals("true"))
+            {
+                Session["inhouse"] = "true";
+            }
+            else
+            {
+                Session["inhouse"] = "false";
+            }
             List<HttpPostedFileBase> attachments = new List<HttpPostedFileBase>();
             try
             {

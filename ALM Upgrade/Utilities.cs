@@ -44,11 +44,18 @@ namespace ALM_Upgrade
                 var attachment = new Attachment(attachments[0].InputStream, attachments[0].FileName);
                 msg.Attachments.Add(attachment);
             }
-            
+            //String inhouse = HttpContext.Current.Session["inhouse"].ToString();
             switch (notificationType)
             {
                 case 1://initial
-                    msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial.txt"));
+					if(HttpContext.Current.Session["inhouse"].ToString() != null && HttpContext.Current.Session["inhouse"].ToString() == "true")
+					{
+						msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial_inhouse.txt"));
+					}
+					else
+					{
+						msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial.txt"));
+					}
                     msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name);
                     msg.Body = msg.Body.Replace("@URL", c.customer_url);
                     msg.Body = msg.Body.Replace("@LINK", "upgradetool.azurewebsites.net/Customer_Project/Status/"+c.customerId);

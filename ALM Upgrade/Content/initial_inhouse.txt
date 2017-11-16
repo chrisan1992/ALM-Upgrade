@@ -1,0 +1,10 @@
+Dear @CUSTOMER
+
+We are starting the import of your projects to the SaaS Environment.
+
+At the end of the change, the requested projects will be available under the following URL: <a href='@URL' target='_blank'>@URL</a>
+
+You can check the progress of this migration on the next link <a href='@LINK' target='_blank'>@LINK</a>
+
+Best Regards.
+SaaS Team
