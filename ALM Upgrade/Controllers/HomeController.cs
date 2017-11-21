@@ -97,14 +97,14 @@ namespace ALM_Upgrade.Controllers
                 List<Users> users = db.Users.Where(x => x.Email == UserName).ToList();
                 if (users.Count == 1)
                 {//the email is rgistered in the system
-                    String newPass = Utilities.Encrypt(Guid.NewGuid().ToString());
-                    users[0].Emailpass = newPass;
+                    String newPass = Guid.NewGuid().ToString();
+                    users[0].Emailpass = Utilities.Encrypt(newPass);
                     db.SaveChanges();
                     Utilities.SendRecoveryPassword(UserName, newPass);
                 }
                 else
                 {
-                    Session["message"] = "Your emil is not registered into the system.";
+                    Session["message"] = "Your email is not registered into the system.";
                     return View();
                 }
                 Session["message"] = "A recovery email has been sent. Please check your inbox.";
