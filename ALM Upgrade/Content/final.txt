@@ -4,7 +4,7 @@ Your planned maintenance has been completed successfully
 
 The projects are now available on <a href='@URL' target='_blank'>@URL</a>
 
-Please open a new ticket under My Account portal in case of any questions or issues after the upgrade.
+Please start validating the instance and recently migrated projects, open a ticket on My Account if any questions or concerns.
 
 Best Regards
 SaaS Team
