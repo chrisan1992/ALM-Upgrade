@@ -97,7 +97,7 @@ namespace ALM_Upgrade.Controllers
                 List<Users> users = db.Users.Where(x => x.Email == UserName).ToList();
                 if (users.Count == 1)
                 {//the email is rgistered in the system
-                    String newPass = Guid.NewGuid().ToString();
+                    String newPass = Utilities.Encrypt(Guid.NewGuid().ToString());
                     users[0].Emailpass = newPass;
                     db.SaveChanges();
                     Utilities.SendRecoveryPassword(UserName, newPass);
