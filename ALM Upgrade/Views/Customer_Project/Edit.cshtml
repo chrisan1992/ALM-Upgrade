@@ -57,6 +57,27 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.upgrade_version, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        @Html.EditorFor(model => model.upgrade_version, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.upgrade_version, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(model => model.upgrade_type, new { @class = "flat" }) In House?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="ln_solid"></div>
                 <div class="form-group">
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
@@ -322,8 +343,7 @@
                         <div class="ln_solid"></div>
                         <textarea rows="5" class="form-control" id="comments-text" style="display:none;" placeholder="Comments..."></textarea>
                         <input type="file" name="File" style="display:none;" id="upload-input">
-						
-                              <input type="checkbox" name="inhouse" id="inhouse" value="1"> InHouse?
+						                          
                             
                     </div>
                 </div>
@@ -378,11 +398,7 @@
 
         var comm = $("#comments-text").val();
         var type = $("#notification-type").val();
-        var inhouse = "false";
-        if (document.getElementById('inhouse').checked)
-		{
-            inhouse = "true";
-		}
+        
 
 
         var fileUpload = $("#upload-input").get(0);
@@ -400,7 +416,6 @@
         fileData.append('customerId', customerId);
         fileData.append('notificationType', type);
         fileData.append('comments', comm);
-        fileData.append('inhouse', inhouse);
 
 
         $.ajax({

@@ -25,6 +25,11 @@ namespace ALM_Upgrade.Models
         public String customer_url { get; set; }
 
         [Display(Name = "SD Number")]
+        [Required(ErrorMessage = "SD Number is required.")]
         public String service_id { get; set; }
+
+        [Display(Name = "Target Version")]
+        [Required(ErrorMessage = "Target Version is required.")]
+        public String upgrade_version { get; set; }
     }
 }

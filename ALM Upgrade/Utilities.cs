@@ -37,7 +37,7 @@ namespace ALM_Upgrade
                 msg.To.Add(new MailAddress(p.email, p.email));
             }
             msg.From = new MailAddress(HttpContext.Current.Session["user_email"].ToString(), HttpContext.Current.Session["username"].ToString());
-            msg.Subject = "ALM Upgrade";
+            
 
             foreach (HttpPostedFileBase f in attachments)
             {//go through all the attachments
@@ -48,13 +48,15 @@ namespace ALM_Upgrade
             switch (notificationType)
             {
                 case 1://initial
-					if(HttpContext.Current.Session["inhouse"].ToString() != null && HttpContext.Current.Session["inhouse"].ToString() == "true")
+					if(c.upgrade_type == true)
 					{
-						msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial_inhouse.txt"));
+                        msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Project Migration " + c.upgrade_version;
+                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial_inhouse.txt"));
 					}
 					else
 					{
-						msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial.txt"));
+                        msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Migration/Upgrade " + c.upgrade_version;
+                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial.txt"));
 					}
                     msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name);
                     msg.Body = msg.Body.Replace("@URL", c.customer_url);
@@ -62,6 +64,16 @@ namespace ALM_Upgrade
                     msg.Body = Regex.Replace(msg.Body, @"(\r\n)|\n|\r", "<br/>");
                     break;
                 case 2://intermediate
+                    if(c.upgrade_type== true)
+                    {
+                        msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Project Migration " + c.upgrade_version;
+                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/intermediate.txt"));
+                    }
+                    else
+                    {
+                        msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Migration/Upgrade " + c.upgrade_version;
+                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/intermediate.txt"));
+                    }
                     msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/intermediate.txt"));
                     msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name);
                     msg.Body = msg.Body.Replace("@URL", c.customer_url);
@@ -72,7 +84,16 @@ namespace ALM_Upgrade
                     msg.Body = Regex.Replace(msg.Body, @"(\r\n)|\n|\r", "<br/>");
                     break;
                 case 3://final
-                    msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/final.txt"));
+                    if(c.upgrade_type == true)
+                    {
+                        msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Project Migration " + c.upgrade_version;
+                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/final.txt"));
+                    }
+                    else
+                    {
+                        msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Migration/Upgrade " + c.upgrade_version;
+                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/final.txt"));
+                    }
                     msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name);
                     msg.Body = msg.Body.Replace("@URL", c.customer_url);
                     msg.Body = msg.Body.Replace("@LINK", "upgradetool.azurewebsites.net/Customer_Project/Status/" + c.customerId);
@@ -113,7 +134,7 @@ namespace ALM_Upgrade
         {
             MailMessage msg = new MailMessage();
             msg.From = new MailAddress("ALM.migrationtool@gmail.com", "ALM.migrationtool@gmail.com");
-            msg.To.Add(new MailAddress(email));
+            msg.To.Add(new MailAddress(email.Replace("@hpe.com","@microfocus.com")));
             msg.Subject = "ALM Upgrade - Password Recovery";
 
             msg.Body = "You are receiving this email due to a request to recover your password. Your temporary password is the following:<br/><br/>" + newPass;

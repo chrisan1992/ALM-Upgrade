@@ -74,7 +74,7 @@ namespace ALM_Upgrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,customer_name,customer_url,deactivation,undo_checkouts,copy_file,copy_db,change_file,restore_project,verify_project,upgrade_project,verification,deactivation,release,initialNotification,finalNotification,service_id")] Customer_Project customer_Project)
+        public ActionResult Create([Bind(Include = "id,customer_name,customer_url,deactivation,undo_checkouts,copy_file,copy_db,change_file,restore_project,verify_project,upgrade_project,verification,deactivation,release,initialNotification,finalNotification,service_id,upgrade_type,upgrade_version")] Customer_Project customer_Project)
         {
             if (ModelState.IsValid)
             {
@@ -141,7 +141,7 @@ namespace ALM_Upgrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,customer_name,customer_url,deactivation,undo_checkouts,copy_file,copy_db,change_file,restore_project,verify_project,upgrade_project,verification,release,customerId,initialNotification,finalNotification,service_id")] Customer_Project customer_Project)
+        public ActionResult Edit([Bind(Include = "id,customer_name,customer_url,deactivation,undo_checkouts,copy_file,copy_db,change_file,restore_project,verify_project,upgrade_project,verification,release,customerId,initialNotification,finalNotification,service_id,upgrade_type,upgrade_version")] Customer_Project customer_Project)
         {
             if (ModelState.IsValid)
             {
@@ -392,16 +392,9 @@ namespace ALM_Upgrade.Controllers
 
 
         [HttpPost]
-        public ActionResult NotifyCustomer(int id, int notificationType, string comments, string inhouse)
+        public ActionResult NotifyCustomer(int id, int notificationType, string comments)
         {
-            if (inhouse.Equals("true"))
-            {
-                Session["inhouse"] = "true";
-            }
-            else
-            {
-                Session["inhouse"] = "false";
-            }
+
             List<HttpPostedFileBase> attachments = new List<HttpPostedFileBase>();
             try
             {
