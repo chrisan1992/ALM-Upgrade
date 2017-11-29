@@ -175,14 +175,17 @@ namespace ALM_Upgrade
         {
             String checks = "<ul>";
             
+            if(c.upgrade_type == false) { 
             if (c.deactivation == true)
             {
                 checks += "<li><strong>Deactivate:</strong><ul>";
                 checks += "<li>Deactivate all projects</li>";
                 checks += "</ul></li>";
             }
+            }else { }
+                
 
-            if (c.undo_checkouts || c.copy_file || c.copy_db || c.change_file)
+                if (c.undo_checkouts || c.copy_file || c.copy_db || c.change_file)
             {
                 checks += "<li><strong>Data Copy:</strong><ul>";
                 if (c.undo_checkouts)
@@ -228,9 +231,6 @@ namespace ALM_Upgrade
                 checks += "<li>Complete internal validation process</li>";
                 checks += "</ul></li>";
             }
-            
-
-
 
             
             if (c.release)
@@ -239,6 +239,7 @@ namespace ALM_Upgrade
                 checks += "<li>Projects Released for validation</li>";
                 checks += "</ul></li>";
             }
+
             
 
             checks += "</ul>";

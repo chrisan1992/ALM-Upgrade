@@ -53,6 +53,8 @@
                 </div>
             </div>
 
+           @if(Model.upgrade_type==false)
+           { 
             <div class="row">
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align:right;">
                     <h5 data-toggle="tooltip" data-placement="top" title="" data-original-title="Deactivate all the projects">Deactivated</h5>
@@ -67,8 +69,11 @@
                     @ViewBag.Deactivation %
                 </div>
             </div>
+           }else { }
 
-            <div class="row">
+            @if (Model.upgrade_type == false)
+            {
+             <div class="row">
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align:right;">
                     <h5 data-toggle="tooltip" data-placement="top" title="" data-original-title="Copy of the databases and repository files">Data Copy</h5>
                     
@@ -82,6 +87,24 @@
                     @ViewBag.DataCopy %
                 </div>
             </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align:right;">
+                        <h5 data-toggle="tooltip" data-placement="top" title="" data-original-title="Copy of the databases and repository files">Data Import</h5>
+
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" style="height: 50px;">
+                        <div class="progress" style="height: 28px;">
+                            <div class="progress-bar progress-bar-primary" data-transitiongoal="@ViewBag.DataCopy"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 hidden-xs">
+                        @ViewBag.DataCopy %
+                    </div>
+                </div>
+            }
 
             <div class="row">
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" style="text-align:right;">
