@@ -27,7 +27,7 @@
           <Property Name="finalNotification" Type="bit" Nullable="false" />
           <Property Name="service_id" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="upgrade_type" Type="bit" Nullable="false" />
-          <Property Name="upgrade_version" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="upgrade_version" Type="varchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="Permission">
           <Key>
@@ -218,7 +218,7 @@ FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery
           <NavigationProperty Name="Project_Email" Relationship="Self.FK__Project_E__proje__22AA2996" FromRole="Customer_Project" ToRole="Project_Email" />
           <NavigationProperty Name="ProjectList" Relationship="Self.FK__ProjectLi__custo__5CD6CB2B" FromRole="Customer_Project" ToRole="ProjectList" />
           <Property Name="upgrade_type" Type="Boolean" Nullable="false" />
-          <Property Name="upgrade_version" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="upgrade_version" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Permission">
           <Key>
