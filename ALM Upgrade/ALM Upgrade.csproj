@@ -200,6 +200,7 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bg-image.jpg" />
     <Content Include="Content\bootstrap-progressbar-3.3.4.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -216,6 +217,7 @@
     <Content Include="Content\green.png" />
     <Content Include="Content\image.png" />
     <Content Include="Content\img.jpg" />
+    <Content Include="Content\initial_dry_run.txt" />
     <Content Include="Content\initial.txt" />
     <Content Include="Content\initial_inhouse.txt" />
     <Content Include="Content\intermediate.txt" />

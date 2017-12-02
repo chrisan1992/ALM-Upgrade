@@ -3397,7 +3397,12 @@ ul.project_files li a i {
     font-size: 35px
 }
 .login {
-    background: #F7F7F7
+    /*background: #F7F7F7*/
+    background-image: url(bg-image.jpg) ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 .login .fa-paw {
     font-size: 26px
@@ -3407,9 +3412,8 @@ a.hiddenanchor {
 }
 .login_wrapper {
     right: 0px;
-    margin: 0px auto;
-    margin-top: 5%;
-    max-width: 350px;
+    /*/margin: 0px auto;*/
+    max-width: 370px;
     position: relative
 }
 .registration_form,
@@ -3482,7 +3486,13 @@ form:after {
     position: relative;
     text-align: center;
     text-shadow: 0 1px 0 #fff;
-    min-width: 280px
+    min-width: 280px;
+    background: #fff;
+    padding: 20px;
+    padding-top: 25%;
+    height: 100vh;
+    opacity: 0.96;
+    filter: alpha(opacity=96); /* For IE8 and earlier */
 }
 .login_content a,
 .login_content .btn-default:hover {

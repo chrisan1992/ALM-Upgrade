@@ -74,7 +74,7 @@ namespace ALM_Upgrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,customer_name,customer_url,deactivation,undo_checkouts,copy_file,copy_db,change_file,restore_project,verify_project,upgrade_project,verification,deactivation,release,initialNotification,finalNotification,service_id,upgrade_type,upgrade_version")] Customer_Project customer_Project)
+        public ActionResult Create([Bind(Include = "id,customer_name,customer_url,deactivation,undo_checkouts,copy_file,copy_db,change_file,restore_project,verify_project,upgrade_project,verification,deactivation,release,initialNotification,finalNotification,service_id,upgrade_type,upgrade_version,dry_run")] Customer_Project customer_Project)
         {
             if (ModelState.IsValid)
             {
@@ -118,6 +118,7 @@ namespace ALM_Upgrade.Controllers
                 {
                     return HttpNotFound();
                 }
+
                 if(customer_Project.deactivation == true && customer_Project.copy_file == true && customer_Project.copy_db == true && 
                     customer_Project.change_file == true && customer_Project.restore_project == true && customer_Project.upgrade_project ==true &&
                     customer_Project.undo_checkouts == true && customer_Project.verify_project ==  true && customer_Project.verification == true &&
@@ -141,7 +142,7 @@ namespace ALM_Upgrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,customer_name,customer_url,deactivation,undo_checkouts,copy_file,copy_db,change_file,restore_project,verify_project,upgrade_project,verification,release,customerId,initialNotification,finalNotification,service_id,upgrade_type,upgrade_version")] Customer_Project customer_Project)
+        public ActionResult Edit([Bind(Include = "id,customer_name,customer_url,deactivation,undo_checkouts,copy_file,copy_db,change_file,restore_project,verify_project,upgrade_project,verification,release,customerId,initialNotification,finalNotification,service_id,upgrade_type,upgrade_version,dry_run")] Customer_Project customer_Project)
         {
             if (ModelState.IsValid)
             {
@@ -394,34 +395,41 @@ namespace ALM_Upgrade.Controllers
         [HttpPost]
         public ActionResult NotifyCustomer(int id, int notificationType, string comments)
         {
-
-            List<HttpPostedFileBase> attachments = new List<HttpPostedFileBase>();
-            try
+            if (Utilities.IsUserLogged())
             {
-                HttpFileCollectionBase files = Request.Files;
-
-                for (int i = 0; i < files.Count; i++)
+                List<HttpPostedFileBase> attachments = new List<HttpPostedFileBase>();
+                try
                 {
-                    //save the attachments
-                    attachments.Add(files[i]);
-                }
-            }
-            catch (Exception ex)
-            {
-                return Json("Error uploading file");
-            }
+                    HttpFileCollectionBase files = Request.Files;
 
-            //get the email list for the specific project
-            List<Project_Email> list = db.Project_Email.Where(x => x.project_id == id).ToList();
-            Customer_Project c = db.Customer_Project.Find(id);
-            if (notificationType == 1)
-                c.initialNotification = true;
-            else if (notificationType == 3)
-                c.finalNotification = true;
-            db.SaveChanges();
-            int send = Utilities.NotifyCustomer(list, notificationType, comments, attachments,c);
-            // Returns message that successfully uploaded  
-            return Json("File Uploaded Successfully!");
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        //save the attachments
+                        attachments.Add(files[i]);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error uploading file");
+                }
+
+                //get the email list for the specific project
+                List<Project_Email> list = db.Project_Email.Where(x => x.project_id == id).ToList();
+                Customer_Project c = db.Customer_Project.Find(id);
+                if (notificationType == 1)
+                    c.initialNotification = true;
+                else if (notificationType == 3)
+                    c.finalNotification = true;
+                db.SaveChanges();
+                int send = Utilities.NotifyCustomer(list, notificationType, comments, attachments, c);
+                // Returns message that successfully uploaded  
+                return Json("File Uploaded Successfully!");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            
         }
     }
 }

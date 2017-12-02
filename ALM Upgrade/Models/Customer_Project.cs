@@ -39,6 +39,7 @@ namespace ALM_Upgrade.Models
         public string service_id { get; set; }
         public bool upgrade_type { get; set; }
         public string upgrade_version { get; set; }
+        public bool dry_run { get; set; }
     
         public virtual ICollection<Project_Email> Project_Email { get; set; }
         public virtual ICollection<ProjectList> ProjectList { get; set; }

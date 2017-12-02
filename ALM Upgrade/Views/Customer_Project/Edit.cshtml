@@ -26,201 +26,345 @@
 
             @using (Html.BeginForm())
             {
-            @Html.AntiForgeryToken()
+                @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.customer_name, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        @Html.EditorFor(model => model.customer_name, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.customer_name, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.customerId)
-                        @Html.HiddenFor(model => model.initialNotification)
-                        @Html.HiddenFor(model => model.finalNotification)
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.customer_name, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                            @Html.EditorFor(model => model.customer_name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.customer_name, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.customerId)
+                            @Html.HiddenFor(model => model.initialNotification)
+                            @Html.HiddenFor(model => model.finalNotification)
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.customer_url, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        @Html.EditorFor(model => model.customer_url, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.customer_url, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.customer_url, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                            @Html.EditorFor(model => model.customer_url, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.customer_url, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.service_id, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        @Html.EditorFor(model => model.service_id, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.service_id, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.service_id, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                            @Html.EditorFor(model => model.service_id, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.service_id, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.upgrade_version, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        @Html.EditorFor(model => model.upgrade_version, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.upgrade_version, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.upgrade_version, htmlAttributes: new { @class = "control-label col-lg-2 col-md-2 col-sm-2 col-xs-12" })
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                            @Html.EditorFor(model => model.upgrade_version, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.upgrade_version, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                            @Html.RadioButtonFor(x => x.upgrade_type, false, new { @class = "flat" }) SaaS To SaaS
+                            &nbsp;&nbsp;
+                            @Html.RadioButtonFor(x => x.upgrade_type, true, new { @class = "flat" }) In House
+                        </div>
                     </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.upgrade_type, new { @class = "flat" }) In House?
-                            </label>
+                    <div class="form-group">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                            <div class="checkbox">
+                                <label style="padding: 0;">
+                                    @Html.CheckBoxFor(model => model.dry_run, new { @class = "flat" }) Dry Run
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="ln_solid"></div>
+
+                    @if (Model.upgrade_type == false)
+                    {
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.deactivation, new { @class = "flat" }) Deactivate all projects
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.undo_checkouts, new { @class = "flat" }) Undo checkouts if the project has the feature of version control enabled
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.copy_file, new { @class = "flat" }) Copy the files of each project into the new filer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.copy_db, new { @class = "flat" }) Copy the schemas of each project using the pretty tool
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.change_file, new { @class = "flat" }) Make the necessary corrections on the dbid.xml file
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.restore_project, new { @class = "flat" }) Restore the projects from Site Admin
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.verify_project, new { @class = "flat" }) Run a verify/repair on each restored project
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.upgrade_project, new { @class = "flat" }) Upgrade each project to the latest version
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.verification, new { @class = "flat" }) Complete the verification process from the Kiosk (<a class="" href="https://pfast01psp.saas.hpe.com/rest/alm/almProcedures" target="_blank">https://pfast01psp.saas.hpe.com/rest/alm/almProcedures</a>)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.release, new { @class = "flat" }) Release the projects to the customer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- ELSE -->
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.deactivation, new { @class = "flat" }) Download data from FTP  
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.copy_file, new { @class = "flat" }) Extract data of each project into the new filer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.copy_db, new { @class = "flat" }) Restore the schemas of each project using the SQLServer/MigrationTool
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.change_file, new { @class = "flat" }) Make the necessary corrections on the dbid.xml file
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.restore_project, new { @class = "flat" }) Restore the projects from Site Admin
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.undo_checkouts, new { @class = "flat" }) Undo checkouts if the project has the feature of version control enabled
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.verify_project, new { @class = "flat" }) Run a verify/repair on each restored project
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.upgrade_project, new { @class = "flat" }) Upgrade each project to the latest version
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.verification, new { @class = "flat" }) Complete the verification process from the Kiosk (<a class="" href="https://pfast01psp.saas.hpe.com/rest/alm/almProcedures" target="_blank">https://pfast01psp.saas.hpe.com/rest/alm/almProcedures</a>)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(model => model.release, new { @class = "flat" }) Release the projects to the customer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    
+
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-success" />
                         </div>
                     </div>
                 </div>
-           
-
-                <div class="ln_solid"></div>
-
-                @if (Model.upgrade_type == false)
-                {
-                <div class="form-group">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.deactivation, new { @class = "flat" }) Deactivate all projects
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                }     else { }
-
-
-                <div class="form-group">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.undo_checkouts, new { @class = "flat" }) Undo checkouts if the project has the feature of version control enabled
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.copy_file, new { @class = "flat" }) Copy the files of each project into the new filer
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.copy_db, new { @class = "flat" }) Copy the schemas of each project using the pretty tool
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.change_file, new { @class = "flat" }) Make the necessary corrections on the dbid.xml file
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.restore_project, new { @class = "flat" }) Restore the projects from Site Admin
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.verify_project, new { @class = "flat" }) Run a verify/repair on each restored project
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.upgrade_project, new { @class = "flat" }) Upgrade each project to the latest version
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.verification, new { @class = "flat" }) Complete the verification process from the Kiosk (<a class="" href="https://pfast01psp.saas.hpe.com/rest/alm/almProcedures" target="_blank">https://pfast01psp.saas.hpe.com/rest/alm/almProcedures</a>)
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                        <div class="checkbox">
-                            <label>
-                                @Html.CheckBoxFor(model => model.release,new { @class="flat" }) Release the projects to the customer
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="ln_solid"></div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-success" />
-                    </div>
-                </div>
-            </div>
             }
 
         </div>
@@ -240,7 +384,7 @@
             </div>
 
             @{
-            Html.RenderAction("ProjectList", new { id = @Model.id });
+                Html.RenderAction("ProjectList", new { id = @Model.id });
             }
 
         </div>
@@ -260,7 +404,7 @@
                 <h4 class="modal-title" id="myModalLabel">Upload Projects</h4>
             </div>
             <div class="modal-body" id="modal-emails-body">
-                <h4>Select the file containing the projects to upload, only .csv files are allowed. Make sure the file is in the correct format:</h4> 
+                <h4>Select the file containing the projects to upload, only .csv files are allowed. Make sure the file is in the correct format:</h4>
                 <ul>
                     <li>
                         Only 2 columns
@@ -277,7 +421,7 @@
                 </ul>
 
                 <input type="file" name="File" style="" id="upload-projects">
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" onclick="uploadProjects(@Model.id);">Upload</button>
@@ -311,7 +455,7 @@
                 <div class="ln_solid"></div>
                 <div id="partial-render">
                     @{
-                    Html.RenderAction("Emails", new { id = @Model.id });
+                        Html.RenderAction("Emails", new { id = @Model.id });
                     }
                 </div>
             </div>
@@ -349,8 +493,8 @@
                         <div class="ln_solid"></div>
                         <textarea rows="5" class="form-control" id="comments-text" style="display:none;" placeholder="Comments..."></textarea>
                         <input type="file" name="File" style="display:none;" id="upload-input">
-						                          
-                            
+
+
                     </div>
                 </div>
             </div>
@@ -404,7 +548,7 @@
 
         var comm = $("#comments-text").val();
         var type = $("#notification-type").val();
-        
+
 
 
         var fileUpload = $("#upload-input").get(0);
@@ -518,7 +662,7 @@
         //disable the already sent notifications
         if ('@Model.initialNotification' == 'True')
         {
-            $('select').children('option[value="1"]').attr('disabled', true);
+           $('select').children('option[value="1"]').attr('disabled', true);
             $('select').children('option[value="2"]').attr('selected', true);
             $("#comments-text").show();
         }

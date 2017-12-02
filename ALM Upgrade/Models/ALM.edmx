@@ -28,6 +28,7 @@
           <Property Name="service_id" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="upgrade_type" Type="bit" Nullable="false" />
           <Property Name="upgrade_version" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="dry_run" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Permission">
           <Key>
@@ -219,6 +220,7 @@ FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery
           <NavigationProperty Name="ProjectList" Relationship="Self.FK__ProjectLi__custo__5CD6CB2B" FromRole="Customer_Project" ToRole="ProjectList" />
           <Property Name="upgrade_type" Type="Boolean" Nullable="false" />
           <Property Name="upgrade_version" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="dry_run" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Permission">
           <Key>
@@ -385,6 +387,7 @@ FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery
           <EntitySetMapping Name="Customer_Project">
             <EntityTypeMapping TypeName="upgradeModel.Customer_Project">
               <MappingFragment StoreEntitySet="Customer_Project">
+                <ScalarProperty Name="dry_run" ColumnName="dry_run" />
                 <ScalarProperty Name="upgrade_version" ColumnName="upgrade_version" />
                 <ScalarProperty Name="upgrade_type" ColumnName="upgrade_type" />
                 <ScalarProperty Name="id" ColumnName="id" />

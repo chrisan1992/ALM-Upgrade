@@ -26,7 +26,7 @@ namespace ALM_Upgrade
             {
                 return false;
             }
-        }                
+        }
 
         public static int NotifyCustomer(List<Project_Email> list, int notificationType, String comments, List<HttpPostedFileBase> attachments, Customer_Project c)
         {
@@ -37,7 +37,7 @@ namespace ALM_Upgrade
                 msg.To.Add(new MailAddress(p.email, p.email));
             }
             msg.From = new MailAddress(HttpContext.Current.Session["user_email"].ToString(), HttpContext.Current.Session["username"].ToString());
-            
+
 
             foreach (HttpPostedFileBase f in attachments)
             {//go through all the attachments
@@ -48,31 +48,69 @@ namespace ALM_Upgrade
             switch (notificationType)
             {
                 case 1://initial
-					if(c.upgrade_type == true)
-					{
-                        msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Project Migration " + c.upgrade_version;
-                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial_inhouse.txt"));
-					}
-					else
-					{
-                        msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Migration/Upgrade " + c.upgrade_version;
-                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial.txt"));
-					}
-                    msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name);
-                    msg.Body = msg.Body.Replace("@URL", c.customer_url);
-                    msg.Body = msg.Body.Replace("@LINK", "upgradetool.azurewebsites.net/Customer_Project/Status/"+c.customerId);
-                    msg.Body = Regex.Replace(msg.Body, @"(\r\n)|\n|\r", "<br/>");
-                    break;
-                case 2://intermediate
-                    if(c.upgrade_type== true)
-                    {
-                        msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Project Migration " + c.upgrade_version;
-                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/intermediate.txt"));
+                    if (c.upgrade_type == true)
+                    {//in house
+                        if (c.dry_run)
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Dry Run " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial_inhouse.txt"));
+                            msg.Body = msg.Body.Replace("migration", "Dry Run");
+                        }
+                        else
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Project Migration " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial_inhouse.txt"));
+                        }
                     }
                     else
                     {
-                        msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Migration/Upgrade " + c.upgrade_version;
-                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/intermediate.txt"));
+                        if (c.dry_run)
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Dry Run " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial_dry_run.txt"));
+                        }
+                        else
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Migration/Upgrade " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/initial.txt"));
+                        }
+
+                    }
+                    msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name);
+                    msg.Body = msg.Body.Replace("@URL", c.customer_url);
+                    msg.Body = msg.Body.Replace("@LINK", "upgradetool.azurewebsites.net/Customer_Project/Status/" + c.customerId);
+                    msg.Body = Regex.Replace(msg.Body, @"(\r\n)|\n|\r", "<br/>");
+                    break;
+                case 2://intermediate
+                    if (c.upgrade_type == true)
+                    {
+                        if (c.dry_run)
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Dry Run " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/intermediate.txt"));
+                            msg.Body = msg.Body.Replace("migration", "Dry Run");
+                        }
+                        else
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Project Migration " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/intermediate.txt"));
+                        }
+
+                    }
+                    else
+                    {
+                        if (c.dry_run)
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Dry Run " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/intermediate.txt"));
+                            msg.Body = msg.Body.Replace("migration", "Dry Run");
+                        }
+                        else
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Migration/Upgrade " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/intermediate.txt"));
+                        }
+
                     }
                     msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/intermediate.txt"));
                     msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name);
@@ -84,20 +122,37 @@ namespace ALM_Upgrade
                     msg.Body = Regex.Replace(msg.Body, @"(\r\n)|\n|\r", "<br/>");
                     break;
                 case 3://final
-                    if(c.upgrade_type == true)
+                    if (c.upgrade_type == true)
                     {
-                        msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Project Migration " + c.upgrade_version;
-                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/final.txt"));
+                        if (c.dry_run)
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Dry Run " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/final.txt"));
+                        }
+                        else
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - In house to SaaS Project Migration " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/final.txt"));
+                        }
                     }
                     else
                     {
-                        msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Migration/Upgrade " + c.upgrade_version;
-                        msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/final.txt"));
+                        if (c.dry_run)
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Dry Run " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/final.txt"));
+                        }
+                        else
+                        {
+                            msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Migration/Upgrade " + c.upgrade_version;
+                            msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/final.txt"));
+                        }
+
                     }
                     msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name);
                     msg.Body = msg.Body.Replace("@URL", c.customer_url);
                     msg.Body = msg.Body.Replace("@LINK", "upgradetool.azurewebsites.net/Customer_Project/Status/" + c.customerId);
-                    msg.Body = Regex.Replace(msg.Body,@"(\r\n)|\n|\r","<br/>");
+                    msg.Body = Regex.Replace(msg.Body, @"(\r\n)|\n|\r", "<br/>");
                     break;
             }
 
@@ -134,7 +189,7 @@ namespace ALM_Upgrade
         {
             MailMessage msg = new MailMessage();
             msg.From = new MailAddress("ALM.migrationtool@gmail.com", "ALM.migrationtool@gmail.com");
-            msg.To.Add(new MailAddress(email.Replace("@hpe.com","@microfocus.com")));
+            msg.To.Add(new MailAddress(email.Replace("@hpe.com", "@microfocus.com")));
             msg.Subject = "ALM Upgrade - Password Recovery";
 
             msg.Body = "You are receiving this email due to a request to recover your password. Your temporary password is the following:<br/><br/>" + newPass;
@@ -174,73 +229,135 @@ namespace ALM_Upgrade
         private static String GetCheckText(Customer_Project c)
         {
             String checks = "<ul>";
-            
-            if(c.upgrade_type == false) { 
-            if (c.deactivation == true)
-            {
-                checks += "<li><strong>Deactivate:</strong><ul>";
-                checks += "<li>Deactivate all projects</li>";
-                checks += "</ul></li>";
-            }
-            }else { }
-                
+
+            if (c.upgrade_type == false)
+            {//SaaS To SaaS
+                if (c.deactivation == true)
+                {
+                    checks += "<li><strong>Deactivate:</strong><ul>";
+                    checks += "<li>Deactivate all projects</li>";
+                    checks += "</ul></li>";
+                }
 
                 if (c.undo_checkouts || c.copy_file || c.copy_db || c.change_file)
-            {
-                checks += "<li><strong>Data Copy:</strong><ul>";
-                if (c.undo_checkouts)
                 {
-                    checks += "<li>If VC enabled, verify checkouts</li>";
+                    checks += "<li><strong>Data Copy:</strong><ul>";
+                    if (c.undo_checkouts)
+                    {
+                        checks += "<li>If VC enabled, verify checkouts</li>";
+                    }
+                    if (c.copy_file)
+                    {
+                        checks += "<li>Copy repository files</li>";
+                    }
+                    if (c.copy_db)
+                    {
+                        checks += "<li>Copy DB schemas</li>";
+                    }
+                    if (c.change_file)
+                    {
+                        checks += "<li>Update configuration files</li>";
+                    }
+                    checks += "</ul></li>";
                 }
-                if (c.copy_file)
-                {
-                    checks += "<li>Copy repository files</li>";
-                }
-                if (c.copy_db)
-                {
-                    checks += "<li>Copy DB schemas</li>";
-                }
-                if (c.change_file)
-                {
-                    checks += "<li>Update configuration files</li>";
-                }
-                checks += "</ul></li>";
-            }
 
-            if (c.restore_project || c.verify_project || c.upgrade_project)
-            {
-                checks += "<li><strong>Upgrade:</strong><ul>";
-                if (c.restore_project)
+                if (c.restore_project || c.verify_project || c.upgrade_project)
                 {
-                    checks += "<li>Restore the projects from Site Admin</li>";
+                    checks += "<li><strong>Upgrade:</strong><ul>";
+                    if (c.restore_project)
+                    {
+                        checks += "<li>Restore the projects from Site Admin</li>";
+                    }
+                    if (c.verify_project)
+                    {
+                        checks += "<li>Run Verify tool on projects to be migrated</li>";
+                    }
+                    if (c.upgrade_project)
+                    {
+                        checks += "<li>Upgrade projects to desired version</li>";
+                    }
+                    checks += "</ul></li>";
                 }
-                if (c.verify_project)
-                {
-                    checks += "<li>Run Verify tool on projects to be migrated</li>";
-                }
-                if (c.upgrade_project)
-                {
-                    checks += "<li>Upgrade projects to desired version</li>";
-                }
-                checks += "</ul></li>";
-            }
-            
-            if (c.verification)
-            {
-                checks += "<li><strong>Verification:</strong><ul>";
-                checks += "<li>Complete internal validation process</li>";
-                checks += "</ul></li>";
-            }
 
-            
-            if (c.release)
-            {
-                checks += "<li><strong>Release:</strong><ul>";
-                checks += "<li>Projects Released for validation</li>";
-                checks += "</ul></li>";
-            }
+                if (c.verification)
+                {
+                    checks += "<li><strong>Verification:</strong><ul>";
+                    checks += "<li>Complete internal validation process</li>";
+                    checks += "</ul></li>";
+                }
 
-            
+
+                if (c.release)
+                {
+                    checks += "<li><strong>Release:</strong><ul>";
+                    checks += "<li>Projects Released for validation</li>";
+                    checks += "</ul></li>";
+                }
+            }
+            else
+            {//in house
+                if (c.deactivation == true)
+                {
+                    checks += "<li><strong>Download:</strong><ul>";
+                    checks += "<li>Download data from FTP</li>";
+                    checks += "</ul></li>";
+                }
+
+                if (c.undo_checkouts || c.copy_file || c.copy_db || c.change_file)
+                {
+                    checks += "<li><strong>Data Copy:</strong><ul>";
+                    if (c.copy_file)
+                    {
+                        checks += "<li>Copy repository files</li>";
+                    }
+                    if (c.copy_db)
+                    {
+                        checks += "<li>Copy DB schemas</li>";
+                    }
+                    if (c.change_file)
+                    {
+                        checks += "<li>Update configuration files</li>";
+                    }
+                    if (c.undo_checkouts)
+                    {
+                        checks += "<li>If VC enabled, verify checkouts</li>";
+                    }
+                    checks += "</ul></li>";
+                }
+
+                if (c.restore_project || c.verify_project || c.upgrade_project)
+                {
+                    checks += "<li><strong>Upgrade:</strong><ul>";
+                    if (c.restore_project)
+                    {
+                        checks += "<li>Restore the projects from Site Admin</li>";
+                    }
+                    if (c.verify_project)
+                    {
+                        checks += "<li>Run Verify tool on projects to be migrated</li>";
+                    }
+                    if (c.upgrade_project)
+                    {
+                        checks += "<li>Upgrade projects to desired version</li>";
+                    }
+                    checks += "</ul></li>";
+                }
+
+                if (c.verification)
+                {
+                    checks += "<li><strong>Verification:</strong><ul>";
+                    checks += "<li>Complete internal validation process</li>";
+                    checks += "</ul></li>";
+                }
+
+
+                if (c.release)
+                {
+                    checks += "<li><strong>Release:</strong><ul>";
+                    checks += "<li>Projects Released for validation</li>";
+                    checks += "</ul></li>";
+                }
+            }
 
             checks += "</ul>";
             return checks;

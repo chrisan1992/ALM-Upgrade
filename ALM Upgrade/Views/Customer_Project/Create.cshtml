@@ -57,12 +57,23 @@
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                         </div>
                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                            @Html.RadioButtonFor(x => x.upgrade_type, false, new { @class = "flat" }) SaaS To SaaS
+                            &nbsp;&nbsp;
+                            @Html.RadioButtonFor(x => x.upgrade_type, true, new { @class = "flat" }) In House
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                        </div>
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 
                             <div class="checkbox">
-                                <label>
-                                    @Html.CheckBoxFor(model => model.upgrade_type, new { @class = "flat" }) In House?
+                                <label style="padding: 0;">
+                                    @Html.CheckBoxFor(model => model.dry_run, new { @class = "flat" }) Dry Run
                                 </label>
                             </div>
+
                         </div>
                     </div>
 
