@@ -575,7 +575,19 @@
             processData: false, // Not to process data
             data: fileData,
             success: function (data) {
+                if (type == 1)
+                {
+                    $('select').children('option[value="2"]').attr('selected', true);
+                    $("#comments-text").show();
+                }
+                if (type == 3)
+                {
+
+                }
+                $("#view-message").html(data);
+                $("#view-message-div").show();
                 CloseModal();
+                //alert(data);
             },
             error: function (err) {
                 alert("An error ocurred");
@@ -662,7 +674,7 @@
         //disable the already sent notifications
         if ('@Model.initialNotification' == 'True')
         {
-           $('select').children('option[value="1"]').attr('disabled', true);
+           //$('select').children('option[value="1"]').attr('disabled', true);
             $('select').children('option[value="2"]').attr('selected', true);
             $("#comments-text").show();
         }

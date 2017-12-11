@@ -76,7 +76,7 @@ namespace ALM_Upgrade
                         }
 
                     }
-                    msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name);
+                    msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name.Remove(c.customer_name.IndexOf("Batch"), c.customer_name.Length-c.customer_name.IndexOf("Batch") ));
                     msg.Body = msg.Body.Replace("@URL", c.customer_url);
                     msg.Body = msg.Body.Replace("@LINK", "upgradetool.azurewebsites.net/Customer_Project/Status/" + c.customerId);
                     msg.Body = Regex.Replace(msg.Body, @"(\r\n)|\n|\r", "<br/>");
@@ -113,7 +113,7 @@ namespace ALM_Upgrade
 
                     }
                     msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/intermediate.txt"));
-                    msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name);
+                    msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name.Remove(c.customer_name.IndexOf("Batch"), c.customer_name.Length - c.customer_name.IndexOf("Batch")));
                     msg.Body = msg.Body.Replace("@URL", c.customer_url);
                     msg.Body = msg.Body.Replace("@CHECKBOXES", GetCheckText(c));
                     comments = Regex.Replace(comments, @"(\r\n)|\n|\r", "<br/>");
@@ -147,9 +147,8 @@ namespace ALM_Upgrade
                             msg.Subject = c.customer_name + " - " + c.service_id + " - SaaS to SaaS Migration/Upgrade " + c.upgrade_version;
                             msg.Body = System.IO.File.ReadAllText(HostingEnvironment.MapPath(@"~/Content/final.txt"));
                         }
-
                     }
-                    msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name);
+                    msg.Body = msg.Body.Replace("@CUSTOMER", c.customer_name.Remove(c.customer_name.IndexOf("Batch"), c.customer_name.Length - c.customer_name.IndexOf("Batch")));
                     msg.Body = msg.Body.Replace("@URL", c.customer_url);
                     msg.Body = msg.Body.Replace("@LINK", "upgradetool.azurewebsites.net/Customer_Project/Status/" + c.customerId);
                     msg.Body = Regex.Replace(msg.Body, @"(\r\n)|\n|\r", "<br/>");

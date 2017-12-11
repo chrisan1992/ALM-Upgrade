@@ -416,14 +416,24 @@ namespace ALM_Upgrade.Controllers
                 //get the email list for the specific project
                 List<Project_Email> list = db.Project_Email.Where(x => x.project_id == id).ToList();
                 Customer_Project c = db.Customer_Project.Find(id);
-                if (notificationType == 1)
-                    c.initialNotification = true;
-                else if (notificationType == 3)
-                    c.finalNotification = true;
-                db.SaveChanges();
                 int send = Utilities.NotifyCustomer(list, notificationType, comments, attachments, c);
-                // Returns message that successfully uploaded  
-                return Json("File Uploaded Successfully!");
+                if (send != -1)
+                {
+                    if (notificationType == 1)
+                        c.initialNotification = true;
+                    else if (notificationType == 3)
+                        c.finalNotification = true;
+
+                    db.SaveChanges();
+                    // Returns message that successfully uploaded  
+                    return Json("The notification was sent correctly.");
+                }
+                else
+                {
+                    // Returns message that successfully uploaded  
+                    return Json("Unable to send notification, please try again.");
+                }
+                
             }
             else
             {
