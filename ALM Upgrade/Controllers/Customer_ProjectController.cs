@@ -356,20 +356,30 @@ namespace ALM_Upgrade.Controllers
         /// <param name="emailList"></param>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpPost]
         public JsonResult AddEmails(string emailList, int id)
         {
             //every line of the json reads every number
             try
             {
                 string[] emails = emailList.Split('\n');
-                foreach (string email in emails)
+                string[] distinctEmails = emails.Distinct().ToArray();
+                //get the list of emails already in the db
+                List<Project_Email> eList = db.Project_Email.Where(x => x.project_id == id).ToList();
+
+                foreach (string email in distinctEmails)
                 {
-                    if (new EmailAddressAttribute().IsValid(email))
+                    if (new EmailAddressAttribute().IsValid(email) )
                     {//checks if this is a valid email address
-                        Project_Email newEmail = new Project_Email();
-                        newEmail.project_id = id;
-                        newEmail.email = email;
-                        db.Project_Email.Add(newEmail);
+                        
+                        if (!CheckEmailExists(eList,email))
+                        {//the email is not added
+                            Project_Email newEmail = new Project_Email();
+                            newEmail.project_id = id;
+                            newEmail.email = email;
+                            db.Project_Email.Add(newEmail);
+                        }  
+                                              
                     }
                 }
                 db.SaveChanges();
@@ -389,6 +399,20 @@ namespace ALM_Upgrade.Controllers
                 //0 is bad
                 return Json(results, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public Boolean CheckEmailExists(List<Project_Email> list, String email)
+        {
+            Boolean result = false;
+            foreach (Project_Email e in list)
+            {
+                if (e.email == email)
+                {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
         }
 
 
@@ -416,8 +440,9 @@ namespace ALM_Upgrade.Controllers
                 //get the email list for the specific project
                 List<Project_Email> list = db.Project_Email.Where(x => x.project_id == id).ToList();
                 Customer_Project c = db.Customer_Project.Find(id);
-                int send = Utilities.NotifyCustomer(list, notificationType, comments, attachments, c);
-                if (send != -1)
+                EmailHandler email = new EmailHandler();
+                Boolean result = email.NotifyCustomer(list, notificationType, comments, attachments, c);
+                if (result == true)
                 {
                     if (notificationType == 1)
                         c.initialNotification = true;

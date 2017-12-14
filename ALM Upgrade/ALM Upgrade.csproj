@@ -150,6 +150,7 @@
     <Compile Include="Controllers\Customer_ProjectController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="EmailHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -218,6 +219,7 @@
     <Content Include="Content\intermediate.txt" />
     <Content Include="Content\jquery.dataTables.css" />
     <Content Include="Content\jquery.mCustomScrollbar.css" />
+    <Content Include="Content\loader.css" />
     <Content Include="Content\loading.gif" />
     <Content Include="Content\logo_mf.png" />
     <Content Include="Content\logo_mf_blue.png" />
@@ -227,6 +229,11 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="images\sort_asc.png" />
+    <Content Include="images\sort_asc_disabled.png" />
+    <Content Include="images\sort_both.png" />
+    <Content Include="images\sort_desc.png" />
+    <Content Include="images\sort_desc_disabled.png" />
     <Content Include="Models\ALM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ALM.Context.cs</LastGenOutput>
@@ -256,6 +263,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\custom.min.js" />
+    <Content Include="Scripts\functions.js" />
     <Content Include="Scripts\icheck.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

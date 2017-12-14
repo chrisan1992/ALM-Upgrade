@@ -98,9 +98,13 @@ namespace ALM_Upgrade.Controllers
                 if (users.Count == 1)
                 {//the email is rgistered in the system
                     String newPass = Guid.NewGuid().ToString();
-                    users[0].Emailpass = Utilities.Encrypt(newPass);
-                    db.SaveChanges();
-                    Utilities.SendRecoveryPassword(UserName, newPass);
+                    EmailHandler email = new EmailHandler();
+                    Boolean result = email.SendRecoveryPassword(UserName, newPass);
+                    if (result == true)
+                    {
+                        users[0].Emailpass = Utilities.Encrypt(newPass);
+                        db.SaveChanges();
+                    }
                 }
                 else
                 {

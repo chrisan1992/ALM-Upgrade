@@ -233,7 +233,7 @@
 
                                 <div class="checkbox">
                                     <label>
-                                        @Html.CheckBoxFor(model => model.deactivation, new { @class = "flat" }) Download data from FTP  
+                                        @Html.CheckBoxFor(model => model.deactivation, new { @class = "flat" }) Download data from FTP
                                     </label>
                                 </div>
                             </div>
@@ -356,7 +356,7 @@
                         </div>
                     }
 
-                    
+
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
@@ -436,7 +436,6 @@
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal-emails">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span>
@@ -459,7 +458,15 @@
                     }
                 </div>
             </div>
+
             <div class="modal-footer">
+                <div id="loading-div-email-list" class="loading" style="display:none;">
+                    <div class="spinner-wrapper">
+                        <span class="spinner-text">LOADING</span>
+                        <span class="spinner"></span>
+                    </div>
+                </div>
+
                 <button type="button" class="btn btn-success" onclick="SaveEmails(@Model.id);">Save emails</button>
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
             </div>
@@ -467,6 +474,9 @@
         </div>
     </div>
 </div>
+
+<!--HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1-->
+
 
 
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="modal-send-email">
@@ -499,6 +509,13 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <div id="loading-div-send-email" class="loading" style="display:none;">
+                    <div class="spinner-wrapper">
+                        <span class="spinner-text">LOADING</span>
+                        <span class="spinner"></span>
+                    </div>
+                </div>
+
                 <button type="button" class="btn btn-success" onclick="NotifyCustomer(@Model.id);" id="btn-notify">Notify Customer</button>
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
             </div>
@@ -512,112 +529,163 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+<link href="~/Content/loader.css" rel="stylesheet" />
+<link href="~/Content/green.css" rel="stylesheet" />
+<script src="~/Scripts/icheck.js"></script>
 <script type="text/javascript">
-    function AddEmails()
-    {
-        $("#modal-emails").modal();
+
+    function ToggleLoading(id, type) {
+    if (type == 1)//show
+        $("#" + id).show();
+    else//hide
+        $("#" + id).hide();
+}
+
+function AddEmails() {
+    ReloadEmails();
+
+    $("#modal-emails").modal();
+}
+
+function HideEmailsModal() {
+    $("#modal-emails").modal('hide');
+}
+
+function ShowEmailsModal() {
+    $("#modal-emails").modal();
+}
+
+//sends the request to notify the customer
+function NotifyCustomer(projectId) {
+    //shows the loading image
+    ToggleLoading("loading-div-send-email", 1);
+
+    var comm = $("#comments-text").val();
+    var type = $("#notification-type").val();
+
+    var fileUpload = $("#upload-input").get(0);
+    var files = fileUpload.files;
+
+    // Create FormData object
+    var fileData = new FormData();
+
+    // Looping over all files and add it to FormData object
+    for (var i = 0; i < files.length; i++) {
+        fileData.append(files[i].name, files[i]);
     }
+    //add other data
+    fileData.append('id', projectId);
+    //fileData.append('customerId', customerId);
+    fileData.append('notificationType', type);
+    fileData.append('comments', comm);
+
+    var request = $.ajax({
+        url: "/Customer_Project/NotifyCustomer",
+        type: "POST",
+        contentType: false, // Not to set any content header
+        processData: false, // Not to process data
+        data: fileData,
+        //dataType: "html"
+    });
+
+
+    request.done(function (msg) {
+        if (type == 1) {
+            $('select').children('option[value="2"]').attr('selected', true);
+            $("#comments-text").show();
+        }
+        if (type == 3) {
+
+        }
+        $("#view-message").html("Email was sent correctly.");
+        $("#view-message-div").show();
+
+        ToggleLoading("loading-div-send-email", 0);
+    });
+
+    request.fail(function (jqXHR, textStatus) {
+        alert("Request failed: " + textStatus);
+    });
+}
+
+    //reloads the emails table
+    function ReloadEmails() {
+        $.ajax({
+
+            url: '@Url.Action("Emails", "Customer_Project")',
+            type: "GET",
+            async: false,
+            dataType: "html",
+            data: { id: @Model.id
+            },//this is as per your requirement
+            success: function (data) {
+                $('#partial-render').html(data);
+                $(".dataTables_filter").css("margin-right", "10px");
+            },
+        });
+    }
+
 
     function OpenSendEmails() {
         $("#modal-send-email").modal();
     }
 
     //saves the emails to the database
-    function SaveEmails(projectId)
-    {
-        OpenModal();
+    function SaveEmails(projectId) {
+        //shows the loading image
+        ToggleLoading("loading-div-email-list", 1);
+
         var emails = $("#emails-text").val();
-        $.ajax({
+
+        var request = $.ajax({
             url: "/Customer_Project/AddEmails",
-            type: "GET",
-            data: { emailList: emails, id: projectId},
-            success: function (data) {
-                $("#partial-render").load('/Customer_Project/Emails/' +@Model.id);
-                $("#emails-text").val("");
-                CloseModal();
-            }
+            type: "POST",
+            data: { emailList: emails, id: projectId }
+            //dataType: "html"
         });
 
-    }
 
-    //sends the request to notify the customer
-    function NotifyCustomer(projectId)
-    {
-        OpenModal();
-        $("#modal-send-email").modal('hide');
+        request.done(function (msg) {
+            ReloadEmails();//reload the table
+            $("#emails-text").val("");//clear the textarea
+            ToggleLoading("loading-div-email-list", 0);//hide the loading image
+        });
 
-        var comm = $("#comments-text").val();
-        var type = $("#notification-type").val();
-
-
-
-        var fileUpload = $("#upload-input").get(0);
-        var files = fileUpload.files;
-
-        // Create FormData object
-        var fileData = new FormData();
-
-        // Looping over all files and add it to FormData object
-        for (var i = 0; i < files.length; i++) {
-            fileData.append(files[i].name, files[i]);
-        }
-        //add other data
-        fileData.append('id', projectId);
-        //fileData.append('customerId', customerId);
-        fileData.append('notificationType', type);
-        fileData.append('comments', comm);
-
-
-        $.ajax({
-            url: "/Customer_Project/NotifyCustomer",
-            type: "POST",
-            contentType: false, // Not to set any content header
-            processData: false, // Not to process data
-            data: fileData,
-            success: function (data) {
-                if (type == 1)
-                {
-                    $('select').children('option[value="2"]').attr('selected', true);
-                    $("#comments-text").show();
-                }
-                if (type == 3)
-                {
-
-                }
-                $("#view-message").html(data);
-                $("#view-message-div").show();
-                CloseModal();
-                //alert(data);
-            },
-            error: function (err) {
-                alert("An error ocurred");
-            }
+        request.fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
         });
     }
 
     //sends the request to delete an email
-    function DeleteEmail(EmailID)
-    {
-        OpenModal();
-        $.ajax({
+    function DeleteEmail(EmailID) {
+        //shows the loading image
+        ToggleLoading("loading-div-email-list", 1);
+
+        var request = $.ajax({
             url: "/Customer_Project/DeleteEmail",
-            type: "POST",
+            type: "GET",
             data: { id: EmailID },
-            success: function (data) {
-                $("#partial-render").load('/Customer_Project/Emails/' +@Model.id);
-                CloseModal();
-            }
+            //dataType: "html"
         });
+
+
+        request.done(function (msg) {
+            ReloadEmails();//reload the table
+            ToggleLoading("loading-div-email-list", 0);//hide the loading image
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+        });
+
 
     }
 
-    function openUploadProjects(id)
-    {
+    function openUploadProjects(id) {
         $("#modal-upload-projects").modal();
     }
 
-    function uploadProjects(id)
-    {
+    function uploadProjects(id) {
         OpenModal();
         var fileUpload = $("#upload-projects").get(0);
         var files = fileUpload.files;
@@ -672,27 +740,26 @@
         $("[type=search]").addClass("form-control");//add the class to the field
 
         //disable the already sent notifications
-        if ('@Model.initialNotification' == 'True')
-        {
-           //$('select').children('option[value="1"]').attr('disabled', true);
+        if ('@Model.initialNotification' == 'True') {
+            //$('select').children('option[value="1"]').attr('disabled', true);
             $('select').children('option[value="2"]').attr('selected', true);
             $("#comments-text").show();
         }
 
-        if ('@Model.finalNotification' == 'True')
-        {//si se envio la final, no se pueden enviar mas
+        if ('@Model.finalNotification' == 'True') {//si se envio la final, no se pueden enviar mas
             $('select').children('option[value="3"]').attr('disabled', true);
             $('select').children('option[value="2"]').attr('disabled', true);
             $('select').children('option[value="1"]').attr('disabled', true);
             $("#btn-notify").hide();
             $("#comments-text").hide();
         }
-        if ('@ViewBag.allchecks' == 'True')
-        {
+        if ('@ViewBag.allchecks' == 'True') {
             $('select').children('option[value="3"]').attr('disabled', false);
         }
     });
-</script>
 
-<link href="~/Content/green.css" rel="stylesheet" />
-<script src="~/Scripts/icheck.js"></script>
+    $(window).load(function () {
+        // Run code
+        $('#projects_table').DataTable();
+    });
+</script>
