@@ -6,5 +6,7 @@ The projects are now available on <a href='@URL' target='_blank'>@URL</a>
 
 Please start validating the instance and recently migrated projects, open a ticket on My Account if any questions or concerns.
 
+The project list of this migration can be found on the next link <a href='@LINK' target='_blank'>@LINK</a>
+
 Best Regards
 SaaS Team

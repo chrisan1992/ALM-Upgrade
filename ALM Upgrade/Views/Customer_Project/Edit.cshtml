@@ -593,13 +593,14 @@ function NotifyCustomer(projectId) {
         if (type == 1) {
             $('select').children('option[value="2"]').attr('selected', true);
             $("#comments-text").show();
+            
         }
         if (type == 3) {
 
         }
         $("#view-message").html("Email was sent correctly.");
         $("#view-message-div").show();
-
+        $("#modal-send-email").modal('hide');
         ToggleLoading("loading-div-send-email", 0);
     });
 

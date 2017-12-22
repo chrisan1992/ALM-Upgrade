@@ -80,6 +80,9 @@ namespace ALM_Upgrade.Controllers
             {
                 try
                 {
+                    if (customer_Project.customer_name.Contains("batch"))
+                        customer_Project.customer_name.Replace("batch", "Batch");
+  
                     customer_Project.customerId = Guid.NewGuid();
                     db.Customer_Project.Add(customer_Project);
                     db.SaveChanges();
