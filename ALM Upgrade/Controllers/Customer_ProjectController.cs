@@ -465,7 +465,7 @@ namespace ALM_Upgrade.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Home");
+                return Json("-1");
             }
             
         }

@@ -502,7 +502,7 @@
                         </select>
                         <div class="ln_solid"></div>
                         <textarea rows="5" class="form-control" id="comments-text" style="display:none;" placeholder="Comments..."></textarea>
-                        <input type="file" name="File" style="display:none;" id="upload-input">
+                        <input type="file" name="File" style="display:none;" id="upload-input" multiple>
 
 
                     </div>
@@ -590,18 +590,25 @@ function NotifyCustomer(projectId) {
 
 
     request.done(function (msg) {
-        if (type == 1) {
-            $('select').children('option[value="2"]').attr('selected', true);
-            $("#comments-text").show();
-            
+        if (msg == "-1") {
+            //Session is ended
+            window.location.href = '/Home/Login/';
         }
-        if (type == 3) {
+        else
+        {
+            if (type == 1) {
+                $('select').children('option[value="2"]').attr('selected', true);
+                $("#comments-text").show();
 
+            }
+            if (type == 3) {
+
+            }
+            $("#view-message").html("Email was sent correctly.");
+            $("#view-message-div").show();
+            $("#modal-send-email").modal('hide');
+            ToggleLoading("loading-div-send-email", 0);
         }
-        $("#view-message").html("Email was sent correctly.");
-        $("#view-message-div").show();
-        $("#modal-send-email").modal('hide');
-        ToggleLoading("loading-div-send-email", 0);
     });
 
     request.fail(function (jqXHR, textStatus) {
