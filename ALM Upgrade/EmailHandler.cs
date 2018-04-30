@@ -28,11 +28,12 @@ namespace ALM_Upgrade
             }
             msg.From = new MailAddress(HttpContext.Current.Session["user_email"].ToString(), HttpContext.Current.Session["username"].ToString());
 
-
+            int attachIndex = 0;
             foreach (HttpPostedFileBase f in attachments)
             {//go through all the attachments
-                var attachment = new Attachment(attachments[0].InputStream, attachments[0].FileName);
+                var attachment = new Attachment(attachments[attachIndex].InputStream, attachments[attachIndex].FileName);
                 msg.Attachments.Add(attachment);
+                ++attachIndex;
             }
             //String inhouse = HttpContext.Current.Session["inhouse"].ToString();
             switch (notificationType)
