@@ -12,5 +12,7 @@ Please remember that the download of the new client components may be required
 
 You can check the progress of this migration on the next link <a href='@LINK' target='_blank'>@LINK</a>
 
+DO NOT access or validate the instance until you receive final notification of completion!
+
 Best Regards.
 SaaS Team
